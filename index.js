@@ -111,10 +111,10 @@ app.post('/api/persons', (req, res, next) => {
 app.put('/api/persons/:id', (req, res, next) => {
     const {name, number} = req.body
     const id = req.params.id
-
+    console.log(name, number)
     const person = {
-        name: body.name,
-        number: body.number,
+        name: name,
+        number: number,
     }
 
     Person.findByIdAndUpdate(id, {name, number}, {new: true, runValidators: true, context: 'query'})
