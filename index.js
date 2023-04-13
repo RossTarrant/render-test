@@ -9,7 +9,7 @@ app.use(express.static('build'))
 app.use(express.json())
 
 const morgan = require('morgan')
-morgan.token('body', (req, res) => {
+morgan.token('body', (req) => {
     return JSON.stringify(req.body)
 })
 // using tiny + custom made 'body' token
@@ -20,24 +20,24 @@ app.use(cors())
 
 let persons = [
     { 
-      "id": 1,
-      "name": "Arto Hellas", 
-      "number": "040-123456"
+        'id': 1,
+        'name': 'Arto Hellas', 
+        'number': '040-123456'
     },
     { 
-      "id": 2,
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
+        'id': 2,
+        'name': 'Ada Lovelace', 
+        'number': '39-44-5323523'
     },
     { 
-      "id": 3,
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
+        'id': 3,
+        'name': 'Dan Abramov', 
+        'number': '12-43-234345'
     },
     { 
-      "id": 4,
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
+        'id': 4,
+        'name': 'Mary Poppendieck', 
+        'number': '39-23-6423122'
     }
 ]
 
@@ -66,7 +66,7 @@ app.get('/api/persons/:id', (req, res, next) => {
             res.status(404).end()
         }
     })
-    .catch(error => next(error))
+        .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
@@ -79,7 +79,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
             res.status(404).end()
         }
     })
-    .catch(error => next(error))
+        .catch(error => next(error))
 })
 
 app.post('/api/persons', (req, res, next) => {
@@ -98,8 +98,8 @@ app.post('/api/persons', (req, res, next) => {
     }
 
     const person = new Person({
-        "name": data.name,
-        "number": data.number
+        'name': data.name,
+        'number': data.number
     })
 
     person.save().then(savedPerson => {
@@ -111,11 +111,6 @@ app.post('/api/persons', (req, res, next) => {
 app.put('/api/persons/:id', (req, res, next) => {
     const {name, number} = req.body
     const id = req.params.id
-    console.log(name, number)
-    const person = {
-        name: name,
-        number: number,
-    }
 
     Person.findByIdAndUpdate(id, {name, number}, {new: true, runValidators: true, context: 'query'})
         .then(updatedPerson => {
@@ -148,5 +143,5 @@ app.use(errorHander)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 })
